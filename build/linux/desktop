@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=MyTools
+Comment=A desktop toolbox built with Wails and Vue
+# The Exec line includes %u to pass the URL to the application
+Exec=/usr/local/bin/wails-mytools %u
+Terminal=false
+Type=Application
+Icon=wails-mytools
+Categories=Utility;
+StartupWMClass=wails-mytools
+
+ 

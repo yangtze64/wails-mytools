@@ -1,0 +1,90 @@
+@media (max-width: 1100px) {
+  .dedupe-editor,
+  .diff-inputs,
+  .json-editor,
+    .markdown-layout,
+    .random-layout,
+    .timestamp-layout,
+    .bookmark-layout,
+    .secret-layout,
+    .qr-layout,
+  .qr-decode-layout,
+  .mind-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .qr-preview__stage {
+    min-height: 320px;
+  }
+
+  .decode-preview__stage {
+    min-height: 320px;
+  }
+
+  .mind-map-stage {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    display: block;
+    overflow-y: auto;
+  }
+
+  .sidebar {
+    height: auto;
+    width: 100% !important;
+  }
+
+  .workspace {
+    height: auto;
+    overflow: visible;
+  }
+
+  .workspace__body {
+    overflow: visible;
+    padding: 22px 16px;
+  }
+
+  .tool-tabs__scroller {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .tool-tab {
+    min-width: 104px;
+  }
+
+  .tool-header {
+    flex-direction: column;
+  }
+
+  .tool-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .form-grid,
+  .color-grid,
+  .logo-panel__body {
+    grid-template-columns: 1fr;
+  }
+
+  .logo-panel__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .qr-preview__stage {
+    min-height: 300px;
+  }
+
+  .decode-preview__stage {
+    min-height: 300px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+}

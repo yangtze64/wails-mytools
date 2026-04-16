@@ -1,0 +1,117 @@
+.tool-tabs {
+  flex: 0 0 auto;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.tool-tabs__scroller {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 8px 14px 0;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
+}
+
+.tool-tabs__scroller:hover {
+  scrollbar-color: #cfd6e1 transparent;
+}
+
+.tool-tabs__scroller::-webkit-scrollbar {
+  height: 5px;
+}
+
+.tool-tabs__scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tool-tabs__scroller::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: transparent;
+}
+
+.tool-tabs__scroller:hover::-webkit-scrollbar-thumb {
+  background: #cfd6e1;
+}
+
+.tool-tab {
+  position: relative;
+  display: grid;
+  min-width: 108px;
+  max-width: 168px;
+  min-height: 34px;
+  flex: 0 0 auto;
+  grid-template-columns: minmax(0, 1fr) 22px;
+  grid-template-rows: 1fr;
+  align-items: center;
+  column-gap: 8px;
+  padding: 0 6px 0 10px;
+  border: 1px solid #e5e7eb;
+  border-bottom-color: transparent;
+  border-radius: 7px 7px 0 0;
+  background: #f1f5f9;
+  color: #111827;
+  text-align: left;
+  transition: background-color 0.16s ease, border-color 0.16s ease;
+}
+
+.tool-tab:hover {
+  border-color: #dbe1ea;
+  background: #ffffff;
+}
+
+.tool-tab.is-active {
+  border-color: #d8dee8;
+  border-bottom-color: #ffffff;
+  background: #ffffff;
+  box-shadow: 0 -1px 0 #ffffff inset;
+}
+
+.tool-tab__trigger {
+  display: grid;
+  min-width: 0;
+  grid-column: 1;
+  grid-row: 1;
+  align-content: center;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.tool-tab__title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tool-tab__title {
+  color: #111827;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 34px;
+}
+
+.tool-tab__close {
+  grid-column: 2;
+  grid-row: 1;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.tool-tab__close:hover {
+  background: #f3f4f6;
+  color: #111827;
+}

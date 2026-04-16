@@ -1,0 +1,58 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local env
+.env
+.env.*
+!.env.example
+
+# Task / package manager caches
+.task/
+.pnpm-store/
+
+# Go
+*.test
+*.out
+coverage.out
+coverage.html
+
+# Wails build output
+bin/
+dist/
+
+# Frontend dependencies and build output
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Wails generated TypeScript bindings
+frontend/bindings/
+
+# Generated app icons and platform icon assets
+build/darwin/icons.icns
+build/darwin/Assets.car
+build/windows/icon.ico
+build/android/app/src/main/res/mipmap-*/ic_launcher.png
+build/android/app/src/main/res/mipmap-*/ic_launcher_round.png
+build/ios/icon.png
+
+# Downloaded installer/cache artifacts
+build/linux/appimage/build/
+build/windows/nsis/MicrosoftEdgeWebview2Setup.exe
+
+# Local app data exported during development
+bookmarks.json
+secrets.json
+secrets.key

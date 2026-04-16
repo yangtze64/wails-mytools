@@ -1,0 +1,84 @@
+.diff-stats {
+  margin-bottom: 14px;
+}
+
+.diff-stats .el-col {
+  margin-bottom: 12px;
+}
+
+.diff-stats .el-card {
+  border-radius: 8px;
+}
+
+.diff-stats .el-card__body {
+  padding: 16px;
+}
+
+.diff-inputs {
+  display: grid;
+  min-height: 260px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.diff-result {
+  min-height: 220px;
+  border-radius: 8px;
+}
+
+.diff-result .el-card__header {
+  padding: 13px 16px;
+  color: #374151;
+  font-weight: 700;
+}
+
+.diff-result .el-card__body {
+  padding: 0;
+}
+
+.diff-lines {
+  max-height: 320px;
+  overflow: auto;
+  padding: 8px 0;
+  background: #ffffff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+}
+
+.diff-line {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  min-height: 28px;
+  align-items: center;
+  padding: 0 12px 0 0;
+  color: #374151;
+  white-space: pre-wrap;
+}
+
+.diff-line span {
+  color: #94a3b8;
+  text-align: center;
+}
+
+.diff-line code {
+  overflow-wrap: anywhere;
+}
+
+.diff-line--added {
+  color: #166534;
+  background: #ecfdf5;
+}
+
+.diff-line--added span {
+  color: #16a34a;
+}
+
+.diff-line--removed {
+  color: #991b1b;
+  background: #fef2f2;
+}
+
+.diff-line--removed span {
+  color: #dc2626;
+}

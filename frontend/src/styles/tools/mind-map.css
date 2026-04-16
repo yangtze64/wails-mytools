@@ -1,0 +1,33 @@
+.mind-map-pro-card {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  border-radius: 8px;
+}
+
+.mind-map-pro-card .el-card__body {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  padding: 0;
+}
+
+.mind-map-pro {
+  width: 100%;
+  min-height: 620px;
+  overflow: hidden;
+  border-radius: 8px;
+  background:
+    linear-gradient(#eef2f7 1px, transparent 1px),
+    linear-gradient(90deg, #eef2f7 1px, transparent 1px);
+  background-color: #fbfdff;
+  background-size: 24px 24px;
+}
+
+.mind-map-pro .map-canvas {
+  background: transparent;
+}
+
+.mind-map-pro .map-container {
+  background: transparent;
+}

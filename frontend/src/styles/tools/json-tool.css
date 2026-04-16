@@ -1,0 +1,16 @@
+.json-indent {
+  display: inline-grid;
+  grid-template-columns: auto 140px;
+  gap: 12px;
+  align-items: center;
+  color: #374151;
+  font-weight: 700;
+}
+
+.json-editor {
+  display: grid;
+  min-height: 520px;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}

@@ -1,0 +1,50 @@
+.devtools-page {
+  gap: 14px;
+}
+
+.devtools-card {
+  border-radius: 8px;
+}
+
+.devtools-card .el-card__header {
+  padding: 13px 16px;
+  color: #374151;
+  font-weight: 700;
+}
+
+.devtools-info {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.devtools-info div {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.devtools-info dt {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.devtools-info dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #111827;
+}
+
+.devtools-tips {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+  color: #4b5563;
+}

@@ -20,6 +20,7 @@ import TimestampView from './tools/TimestampView.vue'
 const appInfo = ref<AppInfo | null>(null)
 const keyword = ref('')
 const MindMapView = defineAsyncComponent(() => import('./tools/MindMapView.vue'))
+const MermaidEditorView = defineAsyncComponent(() => import('./tools/MermaidEditorView.vue'))
 const {
   activeTool,
   activeToolInfo,
@@ -35,6 +36,7 @@ const toolComponents: Record<ToolKey, Component> = {
   'text-diff': TextDiffView,
   'json-tool': JsonToolView,
   'markdown-editor': MarkdownEditorView,
+  'mermaid-editor': MermaidEditorView,
   timestamp: TimestampView,
   bookmarks: BookmarkManagerView,
   'secret-manager': SecretManagerView,

@@ -8,6 +8,7 @@
 @import "./tools/text-diff.css";
 @import "./tools/json-tool.css";
 @import "./tools/markdown-editor.css";
+@import "./tools/mermaid-editor.css";
 @import "./tools/timestamp.css";
 @import "./tools/bookmarks.css";
 @import "./tools/secret-manager.css";

@@ -4,6 +4,7 @@ export type ToolKey =
   | 'text-diff'
   | 'json-tool'
   | 'markdown-editor'
+  | 'mermaid-editor'
   | 'timestamp'
   | 'bookmarks'
   | 'secret-manager'
@@ -50,6 +51,12 @@ const baseTools: ToolMenuItem[] = [
     title: 'Markdown 编辑器',
     description: '实时编辑和预览',
     category: '文本工具',
+  },
+  {
+    key: 'mermaid-editor',
+    title: 'Mermaid 编辑器',
+    description: '图表源码实时预览',
+    category: '图形工具',
   },
   {
     key: 'timestamp',

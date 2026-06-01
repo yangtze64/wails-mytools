@@ -8,13 +8,13 @@
 
 .qr-form,
 .qr-preview {
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .qr-form .el-card__header,
 .qr-preview .el-card__header {
   padding: 13px 16px;
-  color: #374151;
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
@@ -32,7 +32,7 @@
 .color-grid label {
   display: grid;
   gap: 8px;
-  color: #374151;
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
@@ -59,9 +59,9 @@
   width: 40px;
   height: 32px;
   padding: 2px;
-  border: 1px solid #dcdfe6;
-  border-radius: 8px;
-  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
   cursor: pointer;
 }
 
@@ -71,15 +71,15 @@
 
 .native-color-picker::-webkit-color-swatch {
   border: 0;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .logo-panel {
   margin-top: 18px;
   padding: 14px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #f9fafb;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-elevated);
 }
 
 .logo-panel__header {
@@ -91,7 +91,7 @@
 }
 
 .logo-panel__header > span {
-  color: #374151;
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
@@ -120,10 +120,10 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 1px dashed #cbd5e1;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #9ca3af;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  color: var(--color-text-muted);
   font-size: 12px;
 }
 
@@ -136,7 +136,7 @@
 .logo-size {
   display: grid;
   gap: 8px;
-  color: #374151;
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
@@ -156,13 +156,13 @@
   width: 100%;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background:
-    linear-gradient(45deg, #f3f4f6 25%, transparent 25%),
-    linear-gradient(-45deg, #f3f4f6 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #f3f4f6 75%),
-    linear-gradient(-45deg, transparent 75%, #f3f4f6 75%);
-  background-color: #ffffff;
+    linear-gradient(45deg, var(--color-bg-elevated) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--color-bg-elevated) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--color-bg-elevated) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--color-bg-elevated) 75%);
+  background-color: var(--color-bg-surface);
   background-position:
     0 0,
     0 8px,
@@ -174,6 +174,6 @@
 .qr-preview__stage img {
   max-width: min(78%, 420px);
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.12);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }

@@ -1,0 +1,218 @@
+.base64-layout {
+  display: grid;
+  min-height: 640px;
+  flex: 1;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 20px;
+  overflow: hidden;
+}
+
+.base64-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+}
+
+.base64-mode-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mode-btn {
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-base);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mode-btn:hover {
+  border-color: var(--color-primary-light-3);
+  color: var(--color-primary);
+}
+
+.mode-btn.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light-9);
+  color: var(--color-primary);
+}
+
+.base64-action-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border);
+}
+
+.action-btn {
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-base);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.action-btn:hover {
+  border-color: var(--color-primary-light-3);
+  color: var(--color-primary);
+}
+
+.action-btn.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light-9);
+  color: var(--color-primary);
+}
+
+.base64-sidebar__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.base64-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.base64-panel {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.panel-header strong {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.panel-header span {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.panel-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+}
+
+.file-drop-zone {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 20px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-base);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.file-drop-zone:hover {
+  border-color: var(--color-primary-light-3);
+  background: var(--color-primary-light-9);
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-info strong {
+  color: var(--color-text-primary);
+  font-size: 14px;
+}
+
+.file-info span {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.drop-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.drop-hint p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.drop-hint p:first-child {
+  font-weight: 500;
+}
+
+.upload-btn {
+  padding: 8px 20px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.upload-btn:hover {
+  background: var(--color-primary-light-3);
+}
+
+.upload-btn input {
+  display: none;
+}
+
+.file-decode-input {
+  flex: 1;
+  min-height: 0;
+}

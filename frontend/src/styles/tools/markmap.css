@@ -1,0 +1,125 @@
+.markmap-layout {
+  display: grid;
+  min-height: 640px;
+  flex: 1;
+  grid-template-columns: minmax(330px, 400px) minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+}
+
+.markmap-sidebar {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+}
+
+.markmap-sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.markmap-sidebar__header strong {
+  color: var(--color-text-primary);
+  font-size: 14px;
+}
+
+.markmap-sidebar__header span {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.markmap-sidebar__body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.markmap-sidebar__body .el-textarea {
+  flex: 1;
+  min-height: 0;
+}
+
+.markmap-sidebar__body .el-textarea__inner {
+  height: 100% !important;
+  border-color: var(--color-border);
+  background: var(--color-bg-base);
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Menlo, monospace;
+  line-height: 1.65;
+}
+
+.markmap-canvas-wrap {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.markmap-canvas {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  background:
+    linear-gradient(var(--color-border-light) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border-light) 1px, transparent 1px);
+  background-color: var(--color-bg-base);
+  background-size: 24px 24px;
+}
+
+.markmap-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.markmap-canvas__empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.markmap-canvas__empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.markmap-canvas-toolbar {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10;
+}
+
+.markmap-layout.is-fullscreen {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  grid-template-columns: 1fr;
+}
+
+:root[data-theme="dark"] .markmap-canvas {
+  background-color: #1a1f2e;
+}
+
+:root[data-theme="light"] .markmap-canvas {
+  background-color: #f1f5f9;
+}

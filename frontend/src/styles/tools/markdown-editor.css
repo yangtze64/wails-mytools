@@ -7,7 +7,7 @@
 }
 
 .markdown-stats .el-card {
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .markdown-stats .el-card__body {
@@ -27,12 +27,12 @@
   min-width: 0;
   min-height: 0;
   flex-direction: column;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .markdown-preview-card .el-card__header {
   padding: 13px 16px;
-  color: #374151;
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
@@ -46,7 +46,7 @@
 .markdown-preview {
   min-height: 100%;
   padding: 18px 22px;
-  color: #1f2937;
+  color: var(--color-text-primary);
   line-height: 1.7;
 }
 
@@ -54,7 +54,7 @@
 .markdown-preview h2,
 .markdown-preview h3 {
   margin: 1em 0 0.5em;
-  color: #111827;
+  color: var(--color-text-primary);
   line-height: 1.25;
 }
 
@@ -74,17 +74,17 @@
 
 .markdown-preview code {
   padding: 2px 5px;
-  border-radius: 6px;
-  background: #eef2f7;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-elevated);
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Menlo, monospace;
 }
 
 .markdown-preview pre {
   overflow: auto;
   padding: 14px;
-  border-radius: 8px;
-  background: #111827;
-  color: #f8fafc;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
 }
 
 .markdown-preview pre code {
@@ -95,8 +95,8 @@
 
 .markdown-preview blockquote {
   padding: 2px 0 2px 14px;
-  border-left: 4px solid #cbd5e1;
-  color: #64748b;
+  border-left: 4px solid var(--color-border);
+  color: var(--color-text-muted);
 }
 
 .markdown-preview table {
@@ -108,5 +108,5 @@
 .markdown-preview th,
 .markdown-preview td {
   padding: 8px 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }

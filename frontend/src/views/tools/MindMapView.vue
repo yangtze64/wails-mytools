@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { markRaw, nextTick, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
+import { markRaw, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import MindElixir, { type MindElixirData, type MindElixirInstance, type NodeObj } from 'mind-elixir'
 import 'mind-elixir/style.css'
 
@@ -7,6 +7,74 @@ const container = ref<HTMLElement | null>(null)
 const mind = shallowRef<MindElixirInstance | null>(null)
 const statusMessage = ref('')
 const errorMessage = ref('')
+const currentAppTheme = ref<'dark' | 'light'>(document.documentElement.getAttribute('data-theme') as 'dark' | 'light' || 'dark')
+
+const themeObserver = new MutationObserver(() => {
+  const newTheme = document.documentElement.getAttribute('data-theme') as 'dark' | 'light' || 'dark'
+  if (newTheme !== currentAppTheme.value) {
+    currentAppTheme.value = newTheme
+  }
+})
+themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+
+function getMindMapTheme(isDark: boolean) {
+  if (isDark) {
+    return {
+      name: 'mytools-dark',
+      palette: ['#3B82F6', '#8B5CF6', '#EC4899', '#F59E0B', '#22C55E', '#06B6D4'],
+      cssVar: {
+        '--node-gap-x': '42px',
+        '--node-gap-y': '18px',
+        '--main-gap-x': '72px',
+        '--main-gap-y': '42px',
+        '--main-color': '#F1F5F9',
+        '--main-bgcolor': '#1E293B',
+        '--main-bgcolor-transparent': 'rgba(30, 41, 59, 0.85)',
+        '--color': '#F1F5F9',
+        '--bgcolor': '#1E293B',
+        '--selected': 'rgba(59, 130, 246, 0.2)',
+        '--accent-color': '#3B82F6',
+        '--root-color': '#FFFFFF',
+        '--root-bgcolor': '#3B82F6',
+        '--root-border-color': '#3B82F6',
+        '--root-radius': '10px',
+        '--main-radius': '8px',
+        '--topic-padding': '8px 12px',
+        '--panel-color': '#F1F5F9',
+        '--panel-bgcolor': '#273549',
+        '--panel-border-color': '#334155',
+        '--map-padding': '80px',
+      },
+    }
+  }
+  return {
+    name: 'mytools-light',
+    palette: ['#2563EB', '#7C3AED', '#DB2777', '#D97706', '#16A34A', '#0891B2'],
+    cssVar: {
+      '--node-gap-x': '42px',
+      '--node-gap-y': '18px',
+      '--main-gap-x': '72px',
+      '--main-gap-y': '42px',
+      '--main-color': '#0F172A',
+      '--main-bgcolor': '#FFFFFF',
+      '--main-bgcolor-transparent': 'rgba(255, 255, 255, 0.9)',
+      '--color': '#0F172A',
+      '--bgcolor': '#FFFFFF',
+      '--selected': 'rgba(37, 99, 235, 0.15)',
+      '--accent-color': '#2563EB',
+      '--root-color': '#FFFFFF',
+      '--root-bgcolor': '#2563EB',
+      '--root-border-color': '#2563EB',
+      '--root-radius': '10px',
+      '--main-radius': '8px',
+      '--topic-padding': '8px 12px',
+      '--panel-color': '#0F172A',
+      '--panel-bgcolor': '#F1F5F9',
+      '--panel-border-color': '#E2E8F0',
+      '--map-padding': '80px',
+    },
+  }
+}
 
 function createSampleData(): MindElixirData {
   return {
@@ -69,33 +137,7 @@ async function initMindMap(data = createSampleData()) {
     alignment: 'nodes',
     scaleMin: 0.45,
     scaleMax: 2.4,
-    theme: {
-      name: 'mytools',
-      palette: ['#256f5a', '#1d4ed8', '#9333ea', '#dc2626', '#ca8a04', '#0891b2'],
-      cssVar: {
-        '--node-gap-x': '42px',
-        '--node-gap-y': '18px',
-        '--main-gap-x': '72px',
-        '--main-gap-y': '42px',
-        '--main-color': '#1f2937',
-        '--main-bgcolor': '#ffffff',
-        '--main-bgcolor-transparent': 'rgba(255, 255, 255, 0.72)',
-        '--color': '#1f2937',
-        '--bgcolor': '#ffffff',
-        '--selected': '#dff2e9',
-        '--accent-color': '#256f5a',
-        '--root-color': '#ffffff',
-        '--root-bgcolor': '#256f5a',
-        '--root-border-color': '#256f5a',
-        '--root-radius': '8px',
-        '--main-radius': '8px',
-        '--topic-padding': '8px 12px',
-        '--panel-color': '#374151',
-        '--panel-bgcolor': '#ffffff',
-        '--panel-border-color': '#e5e7eb',
-        '--map-padding': '80px',
-      },
-    },
+    theme: getMindMapTheme(currentAppTheme.value === 'dark'),
   }))
 
   mind.value.init(data)
@@ -186,8 +228,16 @@ onMounted(() => {
   initMindMap()
 })
 
+watch(currentAppTheme, () => {
+  if (mind.value) {
+    const data = mind.value.getData()
+    initMindMap(data)
+  }
+})
+
 onBeforeUnmount(() => {
   mind.value?.destroy()
+  themeObserver.disconnect()
 })
 </script>
 

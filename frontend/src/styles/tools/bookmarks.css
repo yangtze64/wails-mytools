@@ -3,7 +3,7 @@
 }
 
 .bookmark-list-panel {
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .bookmark-form {
@@ -14,7 +14,7 @@
 .bookmark-field {
   display: grid;
   gap: 8px;
-  color: #374151;
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
@@ -28,7 +28,7 @@
 .bookmark-store-path {
   margin: 14px 0 0;
   overflow-wrap: anywhere;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   font-size: 12px;
 }
 
@@ -41,9 +41,9 @@
   gap: 10px;
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
 }
 
 .bookmark-tags {
@@ -67,15 +67,15 @@
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #ffffff;
-  transition: border-color 0.16s ease, background-color 0.16s ease;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  transition: var(--transition-normal);
 }
 
 .bookmark-item:hover {
-  border-color: #d7dee8;
-  background: #fbfcfe;
+  border-color: var(--color-border-focus);
+  background: var(--color-bg-hover);
 }
 
 .bookmark-item__main {
@@ -84,7 +84,7 @@
 
 .bookmark-item h2 {
   margin: 0;
-  color: #111827;
+  color: var(--color-text-primary);
   font-size: 14px;
   line-height: 1.3;
 }
@@ -102,7 +102,7 @@
 }
 
 .bookmark-note {
-  color: #6b7280;
+  color: var(--color-text-muted);
   font-size: 12px;
   line-height: 1.5;
 }
@@ -113,7 +113,7 @@
   gap: 5px;
   align-items: center;
   margin-top: 6px;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   font-size: 12px;
 }
 

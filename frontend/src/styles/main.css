@@ -15,5 +15,144 @@
 @import "./tools/devtools.css";
 @import "./tools/qr-code.css";
 @import "./tools/qr-decode.css";
+@import "./tools/image-compress.css";
+@import "./tools/base64-tool.css";
 @import "./tools/mind-map.css";
+@import "./tools/markmap.css";
+@import "./tools/cron-generator.css";
+@import "./tools/jwt-parser.css";
+@import "./tools/url-tool.css";
 @import "./responsive.css";
+
+.el-button {
+  border-radius: var(--radius-sm) !important;
+  font-weight: 600;
+}
+
+.el-card {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-bg-surface) !important;
+  box-shadow: none !important;
+}
+
+.el-card__header {
+  border-bottom: 1px solid var(--color-border) !important;
+  color: var(--color-text-secondary);
+  padding: 12px 16px !important;
+}
+
+.el-input__wrapper {
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-bg-base) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast) !important;
+}
+
+.el-input__wrapper:hover {
+  border-color: var(--color-bg-hover) !important;
+}
+
+.el-input__wrapper.is-focus {
+  border-color: var(--color-border-focus) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+.el-textarea__inner {
+  border-radius: var(--radius-sm) !important;
+  background: var(--color-bg-base) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important;
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast) !important;
+}
+
+.el-textarea__inner:hover {
+  border-color: var(--color-bg-hover) !important;
+}
+
+.el-textarea__inner:focus {
+  border-color: var(--color-border-focus) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+.el-menu {
+  border-right: none !important;
+  background: transparent !important;
+}
+
+.el-menu-item {
+  border-radius: var(--radius-md) !important;
+  margin: 2px 0 !important;
+  transition: background-color var(--transition-fast), color var(--transition-fast) !important;
+}
+
+.el-dialog {
+  border-radius: var(--radius-lg) !important;
+  background: var(--color-bg-surface) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.el-dialog__header {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.el-dialog__title {
+  color: var(--color-text-primary);
+}
+
+.el-statistic__head {
+  color: var(--color-text-muted) !important;
+  font-size: 12px !important;
+}
+
+.el-statistic__content {
+  color: var(--color-text-primary) !important;
+}
+
+.el-tag {
+  border-radius: var(--radius-sm) !important;
+}
+
+.el-alert {
+  border-radius: var(--radius-md) !important;
+}
+
+.el-checkbox__label {
+  color: var(--color-text-secondary);
+}
+
+.el-select .el-input__wrapper {
+  background: var(--color-bg-base) !important;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+:root[data-theme="light"] .el-button--primary {
+  background: var(--el-color-primary) !important;
+  border-color: var(--el-color-primary) !important;
+}
+
+:root[data-theme="light"] .el-input__wrapper {
+  background: #FFFFFF !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+:root[data-theme="light"] .el-textarea__inner {
+  background: #FFFFFF !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text-primary);
+}
+
+:root[data-theme="light"] .el-select .el-input__wrapper {
+  background: #FFFFFF !important;
+}
+
+:root[data-theme="light"] .el-dialog {
+  background: #FFFFFF !important;
+}

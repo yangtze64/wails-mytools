@@ -7,7 +7,7 @@
 }
 
 .dedupe-stats .el-card {
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .dedupe-stats .el-card__body {

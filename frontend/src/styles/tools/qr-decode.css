@@ -8,13 +8,13 @@
 
 .decode-preview,
 .decode-result {
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .decode-preview .el-card__header,
 .decode-result .el-card__header {
   padding: 13px 16px;
-  color: #374151;
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
@@ -32,8 +32,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 8px;
-  background: #f9fafb;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-elevated);
 }
 
 .decode-preview__stage img {
@@ -51,7 +51,7 @@
   height: 100%;
   padding: 16px;
   border: 0;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
   box-shadow: none;
   line-height: 1.6;
 }

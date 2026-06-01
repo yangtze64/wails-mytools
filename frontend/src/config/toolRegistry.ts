@@ -12,6 +12,12 @@ export type ToolKey =
   | 'qr-code'
   | 'qr-decode'
   | 'mind-map'
+  | 'markmap-tool'
+  | 'image-compress'
+  | 'base64-tool'
+  | 'cron-generator'
+  | 'jwt-parser'
+  | 'url-tool'
 export type ToolCategory = '文本工具' | '开发工具' | '图像工具' | '图形工具'
 
 export interface ToolMenuItem {
@@ -19,6 +25,7 @@ export interface ToolMenuItem {
   title: string
   description: string
   category: ToolCategory
+  icon: string
 }
 
 const baseTools: ToolMenuItem[] = [
@@ -27,54 +34,63 @@ const baseTools: ToolMenuItem[] = [
     title: '文本去重',
     description: '按行删除重复内容',
     category: '文本工具',
+    icon: 'CopyDocument',
   },
   {
     key: 'random-string',
     title: '随机字符串',
     description: '生成密码和 Token',
     category: '文本工具',
+    icon: 'MagicStick',
   },
   {
     key: 'text-diff',
     title: '文本差异对比',
     description: '查看新增和删除行',
     category: '文本工具',
+    icon: 'Sort',
   },
   {
     key: 'json-tool',
     title: 'JSON 工具',
     description: '格式化压缩和校验',
     category: '文本工具',
+    icon: 'Document',
   },
   {
     key: 'markdown-editor',
     title: 'Markdown 编辑器',
     description: '实时编辑和预览',
     category: '文本工具',
+    icon: 'EditPen',
   },
   {
     key: 'mermaid-editor',
     title: 'Mermaid 编辑器',
     description: '图表源码实时预览',
     category: '图形工具',
+    icon: 'Share',
   },
   {
     key: 'timestamp',
     title: '时间戳转换',
     description: '时间和时间戳互转',
     category: '开发工具',
+    icon: 'Clock',
   },
   {
     key: 'bookmarks',
     title: '浏览器书签',
     description: '保存和打开常用网站',
     category: '开发工具',
+    icon: 'CollectionTag',
   },
   {
     key: 'secret-manager',
     title: '账号密钥管理',
     description: '本地加密保存密码和 Key',
     category: '开发工具',
+    icon: 'Lock',
   },
   ...(import.meta.env.DEV
     ? [
@@ -83,6 +99,7 @@ const baseTools: ToolMenuItem[] = [
         title: '开发者调试',
         description: '打开 DevTools 和查看环境',
         category: '开发工具' as const,
+        icon: 'Monitor',
       },
     ]
     : []),
@@ -91,18 +108,63 @@ const baseTools: ToolMenuItem[] = [
     title: '生成二维码',
     description: '文本和链接转 PNG',
     category: '图像工具',
+    icon: 'Grid',
   },
   {
     key: 'qr-decode',
     title: '解析二维码',
     description: '图片提取二维码内容',
     category: '图像工具',
+    icon: 'View',
+  },
+  {
+    key: 'image-compress',
+    title: '图片压缩',
+    description: '调整质量压缩图片',
+    category: '图像工具',
+    icon: 'Picture',
+  },
+  {
+    key: 'base64-tool',
+    title: 'Base64 编解码',
+    description: '文本和文件编解码',
+    category: '文本工具',
+    icon: 'Key',
   },
   {
     key: 'mind-map',
     title: '脑图',
     description: '缩进文本生成脑图',
     category: '图形工具',
+    icon: 'Connection',
+  },
+  {
+    key: 'markmap-tool',
+    title: 'Markmap 脑图',
+    description: 'Markdown 生成精美脑图',
+    category: '图形工具',
+    icon: 'DataLine',
+  },
+  {
+    key: 'cron-generator',
+    title: 'Cron 表达式生成器',
+    description: '可视化配置定时任务',
+    category: '开发工具',
+    icon: 'Timer',
+  },
+  {
+    key: 'jwt-parser',
+    title: 'JWT 解析器',
+    description: '解析 JSON Web Token',
+    category: '开发工具',
+    icon: 'Stamp',
+  },
+  {
+    key: 'url-tool',
+    title: 'URL 编解码',
+    description: 'URL 编码解码和解析',
+    category: '开发工具',
+    icon: 'Link',
   },
 ]
 

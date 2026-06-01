@@ -1,10 +1,122 @@
 :root {
-  --el-color-primary: #256f5a;
-  --el-color-primary-light-3: #4b8c78;
-  --el-color-primary-light-5: #7aab9c;
-  --el-color-primary-light-7: #aecdc3;
-  --el-color-primary-light-9: #e8f3ef;
-  --el-color-primary-dark-2: #1d5948;
-  color: #1f2937;
-  background: #f5f7fa;
+  color-scheme: dark;
+
+  --el-color-primary: #3B82F6;
+  --el-color-primary-light-1: #4F8EF7;
+  --el-color-primary-light-2: #639AF8;
+  --el-color-primary-light-3: #77A6F9;
+  --el-color-primary-light-4: #8BB2FA;
+  --el-color-primary-light-5: #9FBEFB;
+  --el-color-primary-light-6: #B3CAFC;
+  --el-color-primary-light-7: #C7D6FD;
+  --el-color-primary-light-8: #DBE2FE;
+  --el-color-primary-light-9: #1E293B;
+  --el-color-primary-dark-1: #2563EB;
+  --el-color-primary-dark-2: #1D4ED8;
+  --el-color-primary-dark-3: #1E40AF;
+
+  --color-bg-base: #0F172A;
+  --color-bg-surface: #1E293B;
+  --color-bg-elevated: #273549;
+  --color-bg-hover: #334155;
+  --color-bg-active: #3B4C63;
+
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-text-disabled: #475569;
+
+  --color-border: #334155;
+  --color-border-light: #1E293B;
+  --color-border-focus: #3B82F6;
+
+  --color-accent-green: #22C55E;
+  --color-accent-red: #EF4444;
+  --color-accent-amber: #F59E0B;
+  --color-accent-blue: #3B82F6;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --transition-fast: 120ms ease-out;
+  --transition-normal: 200ms ease-out;
+  --transition-slow: 300ms ease-out;
+
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 64px;
+
+  --el-bg-color: var(--color-bg-surface);
+  --el-bg-color-overlay: var(--color-bg-elevated);
+  --el-text-color-primary: var(--color-text-primary);
+  --el-text-color-regular: var(--color-text-secondary);
+  --el-text-color-secondary: var(--color-text-muted);
+  --el-text-color-placeholder: var(--color-text-disabled);
+  --el-border-color: var(--color-border);
+  --el-border-color-light: var(--color-border-light);
+  --el-fill-color-blank: var(--color-bg-surface);
+  --el-fill-color-light: var(--color-bg-elevated);
+
+  color: var(--color-text-primary);
+  background: var(--color-bg-base);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --el-color-primary: #2563EB;
+  --el-color-primary-light-1: #3B74ED;
+  --el-color-primary-light-2: #5085EF;
+  --el-color-primary-light-3: #6596F1;
+  --el-color-primary-light-4: #7AA7F3;
+  --el-color-primary-light-5: #8FB8F5;
+  --el-color-primary-light-6: #A4C9F7;
+  --el-color-primary-light-7: #B9DAF9;
+  --el-color-primary-light-8: #CEEBFB;
+  --el-color-primary-light-9: #EFF6FF;
+  --el-color-primary-dark-1: #1D4ED8;
+  --el-color-primary-dark-2: #1E40AF;
+  --el-color-primary-dark-3: #1E3A8A;
+
+  --color-bg-base: #F8FAFC;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-elevated: #F1F5F9;
+  --color-bg-hover: #E2E8F0;
+  --color-bg-active: #CBD5E1;
+
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748B;
+  --color-text-disabled: #94A3B8;
+
+  --color-border: #E2E8F0;
+  --color-border-light: #F1F5F9;
+  --color-border-focus: #2563EB;
+
+  --color-accent-green: #16A34A;
+  --color-accent-red: #DC2626;
+  --color-accent-amber: #D97706;
+  --color-accent-blue: #2563EB;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  --el-bg-color: var(--color-bg-surface);
+  --el-bg-color-overlay: var(--color-bg-elevated);
+  --el-text-color-primary: var(--color-text-primary);
+  --el-text-color-regular: var(--color-text-secondary);
+  --el-text-color-secondary: var(--color-text-muted);
+  --el-text-color-placeholder: var(--color-text-disabled);
+  --el-border-color: var(--color-border);
+  --el-border-color-light: var(--color-border-light);
+  --el-fill-color-blank: var(--color-bg-surface);
+  --el-fill-color-light: var(--color-bg-elevated);
+
+  color: var(--color-text-primary);
+  background: var(--color-bg-base);
 }

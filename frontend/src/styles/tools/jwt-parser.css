@@ -1,0 +1,118 @@
+.jwt-layout {
+  display: grid;
+  min-height: 640px;
+  flex: 1;
+  grid-template-columns: 420px minmax(0, 1fr);
+  gap: 20px;
+  overflow: hidden;
+}
+
+.jwt-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+}
+
+.jwt-sidebar-section h3 {
+  margin: 0 0 12px;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.jwt-sidebar-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.jwt-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.jwt-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.jwt-panel {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  overflow: hidden;
+}
+
+.jwt-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.jwt-panel-title {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 14px;
+}
+
+.jwt-panel-content {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+  overflow: auto;
+}
+
+.jwt-panel-content pre {
+  margin: 0;
+  padding: 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.jwt-empty {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.jwt-payload-info {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.jwt-info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.jwt-info-label {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.jwt-info-value {
+  color: var(--color-text-primary);
+  font-size: 13px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}

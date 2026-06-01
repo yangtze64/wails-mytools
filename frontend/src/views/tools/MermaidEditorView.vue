@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import mermaid from 'mermaid'
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type CSSProperties } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import CanvasToolbar from '../../components/CanvasToolbar.vue'
+import { useCanvasZoom } from '../../composables/useCanvasZoom'
 
 type MermaidTheme = 'default' | 'neutral' | 'dark' | 'forest' | 'base'
 type MermaidSecurityLevel = 'strict' | 'loose'
@@ -21,13 +23,38 @@ const activePanel = ref<PanelKey>('code')
 const mermaidTheme = ref<MermaidTheme>('default')
 const securityLevel = ref<MermaidSecurityLevel>('strict')
 const previewViewport = ref<HTMLElement | null>(null)
-const previewScale = ref(1)
-const previewOffset = ref({ x: 0, y: 0 })
-const isPreviewDragging = ref(false)
+const isFullscreen = ref(false)
 let renderTimer: number | undefined
 let renderVersion = 0
-let dragStart = { x: 0, y: 0 }
-let dragOffsetStart = { x: 0, y: 0 }
+
+const appTheme = ref<'dark' | 'light'>(document.documentElement.getAttribute('data-theme') as 'dark' | 'light' || 'dark')
+
+const themeObserver = new MutationObserver(() => {
+  const newTheme = document.documentElement.getAttribute('data-theme') as 'dark' | 'light' || 'dark'
+  if (newTheme !== appTheme.value) {
+    appTheme.value = newTheme
+    renderMermaid()
+  }
+})
+themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+
+const {
+  zoomText,
+  transform: previewTransform,
+  isDragging: isPreviewDragging,
+  reset: resetPreviewTransform,
+  zoomIn,
+  zoomOut,
+  handleWheel: handlePreviewWheel,
+  startDrag: startPreviewDrag,
+  moveDrag: movePreviewDrag,
+  stopDrag: stopPreviewDrag,
+} = useCanvasZoom()
+
+const effectiveMermaidTheme = computed<MermaidTheme>(() => {
+  if (mermaidTheme.value !== 'default') return mermaidTheme.value
+  return appTheme.value === 'dark' ? 'dark' : 'default'
+})
 
 const themeOptions: Array<{ label: string; value: MermaidTheme }> = [
   { label: '默认', value: 'default' },
@@ -112,16 +139,10 @@ const stats = computed(() => {
   }
 })
 
-const previewTransform = computed<CSSProperties>(() => ({
-  transform: `translate(${previewOffset.value.x}px, ${previewOffset.value.y}px) scale(${previewScale.value})`,
-}))
-
-const previewZoomText = computed(() => `${Math.round(previewScale.value * 100)}%`)
-
 mermaid.initialize({
   startOnLoad: false,
   securityLevel: securityLevel.value,
-  theme: mermaidTheme.value,
+  theme: effectiveMermaidTheme.value,
 })
 
 function useSample() {
@@ -195,11 +216,26 @@ async function downloadPng() {
   }
 
   try {
-    const svgDocument = new DOMParser().parseFromString(previewSvg.value, 'image/svg+xml')
+    let svgContent = previewSvg.value
+    if (!svgContent.includes('xmlns="http://www.w3.org/2000/svg"')) {
+      svgContent = svgContent.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"')
+    }
+
+    const svgDocument = new DOMParser().parseFromString(svgContent, 'image/svg+xml')
     const svgElement = svgDocument.querySelector('svg')
     const viewBox = svgElement?.getAttribute('viewBox')?.split(/\s+/).map(Number)
-    const width = Number(svgElement?.getAttribute('width')) || viewBox?.[2] || 1200
-    const height = Number(svgElement?.getAttribute('height')) || viewBox?.[3] || 800
+    let width = Number(svgElement?.getAttribute('width')) || (viewBox?.[2] || 1200)
+    let height = Number(svgElement?.getAttribute('height')) || (viewBox?.[3] || 800)
+
+    if (!svgElement?.getAttribute('width')) {
+      svgElement?.setAttribute('width', String(width))
+    }
+    if (!svgElement?.getAttribute('height')) {
+      svgElement?.setAttribute('height', String(height))
+    }
+
+    const updatedSvgContent = new XMLSerializer().serializeToString(svgDocument)
+
     const scale = Math.min(window.devicePixelRatio || 1, 2)
     const canvas = document.createElement('canvas')
     const context = canvas.getContext('2d')
@@ -214,7 +250,7 @@ async function downloadPng() {
     context.fillStyle = '#ffffff'
     context.fillRect(0, 0, width, height)
 
-    const blob = new Blob([previewSvg.value], { type: 'image/svg+xml;charset=utf-8' })
+    const blob = new Blob([updatedSvgContent], { type: 'image/svg+xml;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     const image = new Image()
 
@@ -235,7 +271,7 @@ async function downloadPng() {
       downloadBlob(pngBlob, 'mermaid-diagram.png')
       statusMessage.value = '已下载 PNG'
       errorMessage.value = ''
-    }, 'image/png')
+    }, 'image/png', 0.95)
   } catch (error) {
     errorMessage.value = error instanceof Error ? error.message : 'PNG 生成失败'
   }
@@ -249,77 +285,8 @@ function downloadBlob(blob: Blob, filename: string) {
   URL.revokeObjectURL(link.href)
 }
 
-function resetPreviewTransform() {
-  previewScale.value = 1
-  previewOffset.value = { x: 0, y: 0 }
-}
-
-function zoomPreview(delta: number) {
-  const nextScale = clamp(previewScale.value + delta, 0.2, 4)
-  previewScale.value = Number(nextScale.toFixed(2))
-}
-
-function handlePreviewWheel(event: WheelEvent) {
-  if (!previewSvg.value) {
-    return
-  }
-
-  event.preventDefault()
-
-  const viewport = previewViewport.value
-  const currentScale = previewScale.value
-  const nextScale = clamp(currentScale * (event.deltaY > 0 ? 0.9 : 1.1), 0.2, 4)
-
-  if (!viewport || nextScale === currentScale) {
-    previewScale.value = Number(nextScale.toFixed(2))
-    return
-  }
-
-  const rect = viewport.getBoundingClientRect()
-  const pointerX = event.clientX - rect.left - rect.width / 2
-  const pointerY = event.clientY - rect.top - rect.height / 2
-  const scaleRatio = nextScale / currentScale
-
-  previewOffset.value = {
-    x: pointerX - (pointerX - previewOffset.value.x) * scaleRatio,
-    y: pointerY - (pointerY - previewOffset.value.y) * scaleRatio,
-  }
-  previewScale.value = Number(nextScale.toFixed(2))
-}
-
-function startPreviewDrag(event: PointerEvent) {
-  if (!previewSvg.value || event.button !== 0) {
-    return
-  }
-
-  isPreviewDragging.value = true
-  dragStart = { x: event.clientX, y: event.clientY }
-  dragOffsetStart = { ...previewOffset.value }
-  ;(event.currentTarget as HTMLElement).setPointerCapture(event.pointerId)
-}
-
-function movePreviewDrag(event: PointerEvent) {
-  if (!isPreviewDragging.value) {
-    return
-  }
-
-  previewOffset.value = {
-    x: dragOffsetStart.x + event.clientX - dragStart.x,
-    y: dragOffsetStart.y + event.clientY - dragStart.y,
-  }
-}
-
-function stopPreviewDrag(event: PointerEvent) {
-  if (!isPreviewDragging.value) {
-    return
-  }
-
-  isPreviewDragging.value = false
-  ;(event.currentTarget as HTMLElement).releasePointerCapture(event.pointerId)
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max)
+function toggleFullscreen() {
+  isFullscreen.value = !isFullscreen.value
 }
 
 async function renderMermaid() {
@@ -340,7 +307,7 @@ async function renderMermaid() {
     mermaid.initialize({
       startOnLoad: false,
       securityLevel: securityLevel.value,
-      theme: mermaidTheme.value,
+      theme: effectiveMermaidTheme.value,
     })
     const id = `mermaid-${Date.now()}-${currentVersion}`
     const { svg } = await mermaid.render(id, code)
@@ -384,21 +351,28 @@ onBeforeUnmount(() => {
   if (renderTimer) {
     window.clearTimeout(renderTimer)
   }
+  themeObserver.disconnect()
 })
 </script>
 
 <template>
-  <section class="tool-page">
-    <header class="tool-header">
+  <section class="tool-page" :class="{ 'is-canvas-fullscreen': isFullscreen }">
+    <header v-if="!isFullscreen" class="tool-header">
       <div>
         <p class="eyebrow">Diagram</p>
         <h1>Mermaid 编辑器</h1>
         <p class="summary">左侧编辑图表源码和配置，右侧实时预览 Mermaid 图形。</p>
       </div>
+      <div class="tool-actions">
+        <el-button @click="copySource">复制源码</el-button>
+        <el-button @click="copySvg">复制 SVG</el-button>
+        <el-button @click="downloadSvg">下载 SVG</el-button>
+        <el-button type="primary" @click="downloadPng">下载 PNG</el-button>
+      </div>
     </header>
 
-    <section class="mermaid-layout">
-      <aside class="mermaid-sidebar">
+    <section class="mermaid-layout" :class="{ 'is-fullscreen': isFullscreen }">
+      <aside v-if="!isFullscreen" class="mermaid-sidebar">
         <div class="mermaid-sidebar__tabs">
           <button
             v-for="panel in panelItems"
@@ -489,44 +463,39 @@ onBeforeUnmount(() => {
             </button>
           </div>
         </div>
-
-        <div class="mermaid-sidebar__footer">
-          <el-button @click="copySource">复制源码</el-button>
-          <el-button @click="copySvg">复制 SVG</el-button>
-          <el-button @click="downloadSvg">下载 SVG</el-button>
-          <el-button type="primary" @click="downloadPng">下载 PNG</el-button>
-        </div>
       </aside>
 
-      <section class="mermaid-preview-card">
-        <div class="mermaid-preview-card__header">
-          <strong>预览</strong>
-          <div class="mermaid-preview-tools">
-            <span>{{ isRendering ? '渲染中' : previewZoomText }}</span>
-            <button type="button" @click="zoomPreview(-0.1)">-</button>
-            <button type="button" @click="resetPreviewTransform">重置</button>
-            <button type="button" @click="zoomPreview(0.1)">+</button>
-          </div>
-        </div>
+      <section class="mermaid-canvas-wrap">
         <div
           ref="previewViewport"
-          class="mermaid-preview"
+          class="mermaid-canvas"
           :class="{ 'is-dragging': isPreviewDragging }"
           @wheel="handlePreviewWheel"
           @pointerdown="startPreviewDrag"
           @pointermove="movePreviewDrag"
           @pointerup="stopPreviewDrag"
           @pointercancel="stopPreviewDrag"
-          @dblclick="resetPreviewTransform"
+          @dblclick="resetPreviewTransform()"
         >
           <div
             v-if="previewSvg"
-            class="mermaid-preview__content"
+            class="mermaid-canvas__content"
             :style="previewTransform"
           >
-            <div class="mermaid-preview__svg" v-html="previewSvg"></div>
+            <div class="mermaid-canvas__svg" v-html="previewSvg"></div>
           </div>
-          <el-empty v-else description="输入 Mermaid 后预览图形" />
+          <div v-else class="mermaid-canvas__empty">
+            <p>输入 Mermaid 后预览图形</p>
+          </div>
+        </div>
+        <div class="mermaid-canvas-toolbar">
+          <CanvasToolbar
+            :zoom-text="isRendering ? '渲染中' : zoomText"
+            @zoom-in="zoomIn()"
+            @zoom-out="zoomOut()"
+            @reset="resetPreviewTransform()"
+            @fullscreen="toggleFullscreen()"
+          />
         </div>
       </section>
     </section>

@@ -15,23 +15,8 @@
 
 * {
   box-sizing: border-box;
-}
-
-body {
-  min-width: 320px;
-  height: 100vh;
-  margin: 0;
-  overflow: hidden;
-}
-
-#app {
-  height: 100vh;
-  overflow: hidden;
-}
-
-* {
   scrollbar-width: thin;
-  scrollbar-color: #d7dde6 transparent;
+  scrollbar-color: var(--color-bg-hover) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -44,25 +29,44 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-  border: 1px solid transparent;
   border-radius: 999px;
-  background: #d7dde6;
-  background-clip: content-box;
+  background: var(--color-bg-hover);
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #b8c1cf;
-  background-clip: content-box;
+  background: var(--color-bg-active);
 }
 
-h1,
-p {
+body {
+  min-width: 320px;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+}
+
+#app {
+  height: 100vh;
+  overflow: hidden;
+}
+
+h1, p {
   margin-top: 0;
 }
 
 h1 {
   margin-bottom: 8px;
-  color: #111827;
-  font-size: 34px;
-  line-height: 1.15;
+  color: var(--color-text-primary);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }

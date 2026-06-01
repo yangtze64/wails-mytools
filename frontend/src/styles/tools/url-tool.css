@@ -1,0 +1,219 @@
+.url-layout {
+  display: grid;
+  min-height: 640px;
+  flex: 1;
+  grid-template-columns: 420px minmax(0, 1fr);
+  gap: 20px;
+  overflow: hidden;
+}
+
+.url-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+}
+
+.url-action-switch {
+  display: flex;
+  gap: 8px;
+}
+
+.url-action-switch .action-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-base);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.url-action-switch .action-btn:hover {
+  border-color: var(--color-primary-light-3);
+  color: var(--color-primary);
+}
+
+.url-action-switch .action-btn.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light-9);
+  color: var(--color-primary);
+}
+
+.url-sidebar-section h3 {
+  margin: 0 0 12px;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.url-sidebar-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.url-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.url-parse-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+}
+
+.url-parse-section h3 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.url-parts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.url-part-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-base);
+}
+
+.url-part-label {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.url-part-value {
+  color: var(--color-text-primary);
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.url-part-copy {
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.url-part-copy:hover {
+  border-color: var(--color-primary-light-3);
+  color: var(--color-primary);
+}
+
+.url-params {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.url-params-header {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 12px;
+  padding: 8px 12px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.url-param-item {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-base);
+}
+
+.url-param-key {
+  color: var(--color-primary);
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.url-param-value {
+  color: var(--color-text-primary);
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.url-query-string {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-base);
+}
+
+.url-query-string code {
+  flex: 1;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  word-break: break-all;
+}
+
+.url-empty {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  padding: 16px 0;
+  text-align: center;
+}
+
+.url-result-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  flex: 1;
+}
+
+.url-result-header h3 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.url-result-body {
+  flex: 1;
+  min-height: 0;
+}

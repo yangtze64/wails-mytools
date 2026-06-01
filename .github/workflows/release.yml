@@ -7,19 +7,8 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: macos-latest
-            platform: darwin
-          - os: windows-latest
-            platform: windows
-          - os: ubuntu-22.04
-            platform: linux
-
-    runs-on: ${{ matrix.os }}
+  build-macos:
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -41,12 +30,47 @@ jobs:
       - name: Install Wails 3 CLI
         run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
 
-      - name: Install Task (Unix)
-        if: matrix.platform != 'windows'
+      - name: Install Task
         run: sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
 
-      - name: Install Task (Windows)
-        if: matrix.platform == 'windows'
+      - name: Install frontend dependencies
+        run: cd frontend && pnpm install
+
+      - name: Build
+        run: |
+          task darwin:package:universal
+          cd bin && zip -r "MyTools-macOS-universal.zip" "wails-mytools.app"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-darwin
+          path: bin/MyTools-macOS-universal.zip
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install Wails 3 CLI
+        run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
+
+      - name: Install Task
         run: |
           $url = "https://github.com/go-task/task/releases/latest/download/task_windows_amd64.zip"
           Invoke-WebRequest -Uri $url -OutFile task.zip
@@ -54,39 +78,60 @@ jobs:
           Add-Content $env:GITHUB_PATH "C:\task-bin"
         shell: pwsh
 
-      - name: Install Linux dependencies
-        if: matrix.platform == 'linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-4-dev libwebkitgtk-6.0-dev pkg-config
-          pkg-config --modversion gtk4 webkitgtk-6.0
-
       - name: Install frontend dependencies
         run: cd frontend && pnpm install
 
-      - name: Get version
-        id: version
-        shell: bash
-        run: |
-          VERSION=$(jq -r '.version' frontend/package.json)
-          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-          echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
-
-      - name: Build macOS
-        if: matrix.platform == 'darwin'
-        run: |
-          task darwin:package:universal
-          cd bin && zip -r "MyTools-macOS-universal.zip" "wails-mytools.app"
-
-      - name: Build Windows
-        if: matrix.platform == 'windows'
+      - name: Build
         run: |
           task windows:build
           Compress-Archive -Path "bin/wails-mytools.exe" -DestinationPath "bin/MyTools-Windows-amd64.zip"
         shell: pwsh
 
-      - name: Build Linux
-        if: matrix.platform == 'linux'
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-windows
+          path: bin/MyTools-Windows-amd64.zip
+
+  build-linux:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install Linux dependencies
+        run: |
+          echo "deb http://archive.ubuntu.com/ubuntu jammy main universe" | sudo tee /etc/apt/sources.list.d/jammy-extra.list
+          echo "deb http://archive.ubuntu.com/ubuntu jammy-security main universe" | sudo tee -a /etc/apt/sources.list.d/jammy-extra.list
+          echo "deb http://archive.ubuntu.com/ubuntu jammy-updates main universe" | sudo tee -a /etc/apt/sources.list.d/jammy-extra.list
+          sudo apt-get update
+          sudo apt-get install -y libgtk-4-dev libwebkitgtk-6.0-dev pkg-config
+          pkg-config --modversion gtk4 webkitgtk-6.0
+
+      - name: Install Wails 3 CLI
+        run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
+
+      - name: Install Task
+        run: sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+
+      - name: Install frontend dependencies
+        run: cd frontend && pnpm install
+
+      - name: Build
         run: |
           task linux:build
           tar -czf bin/MyTools-Linux-amd64.tar.gz -C bin wails-mytools
@@ -94,15 +139,11 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{ matrix.platform }}
-          path: |
-            bin/MyTools-macOS-universal.zip
-            bin/MyTools-Windows-amd64.zip
-            bin/MyTools-Linux-amd64.tar.gz
-          if-no-files-found: warn
+          name: build-linux
+          path: bin/MyTools-Linux-amd64.tar.gz
 
   release:
-    needs: build
+    needs: [build-macos, build-windows, build-linux]
     if: success()
     runs-on: ubuntu-latest
 

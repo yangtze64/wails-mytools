@@ -82,7 +82,9 @@ jobs:
         shell: pwsh
 
       - name: Install NSIS
-        run: choco install nsis -y
+        run: |
+          choco install nsis -y
+          echo "C:\Program Files (x86)\NSIS" | Out-File -FilePath $env:GITHUB_PATH -Append
         shell: pwsh
 
       - name: Install frontend dependencies

@@ -40,12 +40,15 @@ jobs:
         run: |
           task darwin:package:universal
           cd bin && zip -r "MyTools-macOS-universal.zip" "wails-mytools.app"
+          hdiutil create -volname "MyTools" -srcfolder "wails-mytools.app" -ov "MyTools-macOS-universal.dmg"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-darwin
-          path: bin/MyTools-macOS-universal.zip
+          path: |
+            bin/MyTools-macOS-universal.zip
+            bin/MyTools-macOS-universal.dmg
 
   build-windows:
     runs-on: windows-latest
@@ -78,6 +81,10 @@ jobs:
           Add-Content $env:GITHUB_PATH "C:\task-bin"
         shell: pwsh
 
+      - name: Install NSIS
+        run: choco install nsis -y
+        shell: pwsh
+
       - name: Install frontend dependencies
         run: cd frontend && pnpm install
 
@@ -87,11 +94,17 @@ jobs:
           Compress-Archive -Path "bin/wails-mytools.exe" -DestinationPath "bin/MyTools-Windows-amd64.zip"
         shell: pwsh
 
+      - name: Build NSIS installer
+        run: task windows:package
+        shell: pwsh
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-windows
-          path: bin/MyTools-Windows-amd64.zip
+          path: |
+            bin/MyTools-Windows-amd64.zip
+            bin/wails-mytools-amd64-installer.exe
 
   build-linux:
     runs-on: ubuntu-22.04
@@ -136,11 +149,16 @@ jobs:
           task linux:build
           tar -czf bin/MyTools-Linux-amd64.tar.gz -C bin wails-mytools
 
+      - name: Build AppImage
+        run: task linux:create:appimage
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-linux
-          path: bin/MyTools-Linux-amd64.tar.gz
+          path: |
+            bin/MyTools-Linux-amd64.tar.gz
+            bin/wails-mytools-amd64.AppImage
 
   release:
     needs: [build-macos, build-windows, build-linux]
@@ -166,7 +184,7 @@ jobs:
       - name: Collect release files
         run: |
           mkdir -p release
-          find artifacts -type f \( -name "*.zip" -o -name "*.tar.gz" \) -exec cp {} release/ \;
+          find artifacts -type f \( -name "*.zip" -o -name "*.tar.gz" -o -name "*.dmg" -o -name "*.exe" -o -name "*.AppImage" \) -exec cp {} release/ \;
           ls -la release/
 
       - name: Create release

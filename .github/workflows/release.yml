@@ -1,0 +1,91 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            platform: darwin
+          - os: windows-latest
+            platform: windows
+          - os: ubuntu-latest
+            platform: linux
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install Wails 3 CLI
+        run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
+
+      - name: Install Linux dependencies
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev
+
+      - name: Install frontend dependencies
+        run: cd frontend && pnpm install
+
+      - name: Get version
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(jq -r '.version' frontend/package.json)
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Build macOS
+        if: matrix.platform == 'darwin'
+        run: |
+          task darwin:package:universal
+          cd bin && zip -r "MyTools-macOS-universal.zip" "wails-mytools.app"
+
+      - name: Build Windows
+        if: matrix.platform == 'windows'
+        run: |
+          task windows:build
+          Compress-Archive -Path "bin/wails-mytools.exe" -DestinationPath "bin/MyTools-Windows-amd64.zip"
+        shell: pwsh
+
+      - name: Build Linux
+        if: matrix.platform == 'linux'
+        run: |
+          task linux:build
+          tar -czf bin/MyTools-Linux-amd64.tar.gz -C bin wails-mytools
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: MyTools ${{ steps.version.outputs.tag }}
+          draft: true
+          files: |
+            bin/MyTools-macOS-universal.zip
+            bin/MyTools-Windows-amd64.zip
+            bin/MyTools-Linux-amd64.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
